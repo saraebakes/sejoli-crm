@@ -1,0 +1,30 @@
+Sejoli CRM & Voucher
+====================
+
+Sistem CRM dan Voucher khusus Sejoli.
+Alamat baru: https://sejoli.grok.me
+
+Data Sejoli sepenuhnya terpisah dari Sarae.
+QR pendaftaran lama tetap dipakai, tetapi harus diarahkan (redirect) ke alamat baru.
+
+Fitur:
+- CRM Member (Nama, NIM, HP, Email, Status, Poin, Catatan)
+- Manajemen Voucher
+- Pendaftaran publik via /daftar
+- Sistem Donasi dengan kode unik (3 huruf inisial + angka)
+- Aturan target: umum / jurusan / spesifik NIM
+- Donatur bisa cek pemakaian dengan nama + WA
+
+Cara pakai (lokal):
+1. python3 jalankan.py
+2. Login admin: http://localhost:8770/login
+   Username: admin
+   Password: sejoli123
+3. Pendaftaran: http://localhost:8770/daftar
+4. Donasi: http://localhost:8770/donasi.html
+
+API Donasi:
+- POST /api/donations          -> buat donasi, dapat kode
+- POST /api/donations/check    -> cek pemakaian (nama+WA)
+- POST /api/donations/use      -> mahasiswa klaim dengan kode
+- GET  /api/donations          -> daftar (admin)

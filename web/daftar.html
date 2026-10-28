@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voucher Makan Gratis Sejoli</title>
+<style>
+:root{--primary:#0d6efd;--dark:#0a2540}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;margin:0;background:#0d6efd;min-height:100vh}
+.header-banner{background:linear-gradient(135deg,#0a2540,#0d6efd);color:#fff;padding:1.2rem 1rem;text-align:center}
+.logo{width:70px;height:70px;background:#fff;border-radius:16px;margin:0 auto .5rem;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#0d6efd;font-size:1.1rem}
+h1{margin:0;font-size:1.5rem;color:#ffd60a}
+.sub{margin:.3rem 0 0;font-size:.95rem;opacity:.95}
+.container{max-width:420px;margin:-1rem auto 2rem;background:#fff;border-radius:20px 20px 12px 12px;padding:1.5rem 1.2rem 2rem;box-shadow:0 8px 30px rgba(0,0,0,.15)}
+label{display:block;font-weight:600;margin:.8rem 0 .3rem;color:#0a2540;font-size:.95rem}
+input{width:100%;padding:.75rem .9rem;border:1.5px solid #e0e0e0;border-radius:12px;font-size:1rem;background:#f8f9fa}
+input:focus{outline:none;border-color:#0d6efd;background:#fff}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1.2rem 0}
+.stat{background:#f8f9fa;border-radius:12px;padding:.8rem;text-align:center}
+.stat .num{font-size:1.8rem;font-weight:800;color:#0a2540;line-height:1}
+.stat .label{font-size:.75rem;color:#666;margin-top:.2rem}
+.stat.pink{background:#ffe5e5}.stat.yellow{background:#fff3cd}.stat.blue{background:#e7f1ff}
+.stat.orange{background:#fff3e0}.stat.green{background:#e8f5e9}
+.total-box{background:#0a2540;color:#fff;border-radius:14px;padding:1rem;text-align:center;margin:1rem 0}
+.total-box .num{font-size:2.4rem;font-weight:800;color:#ffd60a}
+.total-box .label{font-size:.85rem;opacity:.9}
+button{width:100%;padding:.85rem;background:#0d6efd;color:#fff;border:none;border-radius:12px;font-size:1.05rem;font-weight:700;cursor:pointer;margin-top:.5rem}
+.footer{text-align:center;margin-top:1.5rem;font-size:.8rem;color:#888}
+</style>
+</head>
+<body>
+<div class="header-banner">
+  <div class="logo">Sejoli</div>
+  <h1>MAKAN GRATIS*</h1>
+  <p class="sub">Voucher Makan Gratis Sejoli<br>untuk Kamu yang sedang membutuhkan</p>
+</div>
+<div class="container">
+  <div id="msg"></div>
+  <form id="form" onsubmit="return daftar(event)">
+    <label>Nama lengkap</label>
+    <input id="nama" required placeholder="Nama lengkap">
+    <label>NIM</label>
+    <input id="nim" required placeholder="NIM ITB">
+    <label>No WA</label>
+    <input id="hp" required placeholder="08...">
+    <div class="stats">
+      <div class="stat pink"><div class="num">19</div><div class="label">Sisa voucher hari ini</div></div>
+      <div class="stat yellow"><div class="num">20</div><div class="label">voucher harian</div></div>
+      <div class="stat blue"><div class="num">100</div><div class="label">kuota</div></div>
+      <div class="stat orange"><div class="num">90</div><div class="label">voucher terdaftar</div></div>
+      <div class="stat green" style="grid-column:span 2"><div class="num">86</div><div class="label">mahasiswa</div></div>
+    </div>
+    <div class="total-box">
+      <div class="num">54</div>
+      <div class="label">Sisa voucher total</div>
+    </div>
+    <button type="submit">Daftar & Klaim Voucher</button>
+  </form>
+  <div class="footer">sejoli.grok.me — Data Sejoli terpisah dari Sarae</div>
+</div>
+<script>
+function daftar(e){
+  e.preventDefault();
+  const nama=document.getElementById('nama').value.trim();
+  const nim=document.getElementById('nim').value.trim();
+  const hp=document.getElementById('hp').value.trim();
+  if(!nama||!nim||!hp){document.getElementById('msg').innerHTML='<div style="color:red">Nama, NIM, dan No WA wajib</div>';return false;}
+  fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nama,nim,hp})})
+    .then(r=>r.json()).then(d=>{
+      document.getElementById('msg').innerHTML=d.ok?'<div style="color:green">'+d.message+'</div>':'<div style="color:red">'+(d.error||'Gagal')+'</div>';
+      if(d.ok) document.getElementById('form').reset();
+    });
+  return false;
+}
+</script>
+</body>
+</html>
